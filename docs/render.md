@@ -42,17 +42,26 @@ PostgreSQL 16 instance in the same region, block external IP access, then config
 | Repository | `https://github.com/arpitkjaiswal/AegisVault` |
 | Branch | `main` |
 | Language/runtime | Docker |
-| Dockerfile | `./Dockerfile` |
-| Docker Command (CMD override) | `render` |
+| Dockerfile | `./Dockerfile.render` |
+| Docker Command | Leave blank (use the image's complete default CMD) |
 | Health check | `/readyz` |
 | `AEGIS_ALLOW_SYNTHETIC_DEPLOY` | `yes` |
 | `DATABASE_URL` | Internal PostgreSQL URL from your new database |
 | Four secret variables above | Independent random, base64-encoded 32-byte values |
 
 Leave `PORT` to Render. The process binds `0.0.0.0` and uses Render's `PORT` (default
-10000 if absent). The existing Docker ENTRYPOINT invokes the CLI; `render` is its
-subcommand. Do **not** use the old file-based `serve` command for this cloud profile.
+10000 if absent). The Render image has no ENTRYPOINT and directly runs
+`python -m aegisvault.render`. Do **not** use the old file-based `serve` command for this cloud profile.
 It expects local private files and is intended for the local/Compose workflow.
+
+### Updating a service created with the earlier configuration
+
+Set **Dockerfile Path** to `./Dockerfile.render`, clear the old **Docker Command** value
+`render`, save, and manually deploy the latest commit. If the dashboard requires a
+command, enter the complete `python -m aegisvault.render`. The bare word `render` is a
+CLI subcommand, not an executable. Retain the existing database and all secret variables;
+this correction needs no new keys or database. A previously saved dashboard override can
+survive a source change, so inspect that field even after updating the Blueprint.
 
 ## Restart, health and custody boundaries
 
@@ -95,7 +104,7 @@ workspace-dependent overage behavior; review your workspace's billing/spend sett
 
 `tests/test_render.py` covers redacted startup refusal, TLS URL handling, environment-key
 stability, restart reconstruction and readiness semantics. The `render-container` CI job
-builds the actual Dockerfile and runs `render` on port 10000 against a TLS-enabled disposable
+builds `Dockerfile.render` and uses its default CMD on port 10000 against a TLS-enabled disposable
 PostgreSQL 16 container. It exercises authenticated encrypted writes, reads, search and audit,
 restarts the application with a read-only filesystem and no state volume, and then stops and
 restarts PostgreSQL to verify readiness and retained data. Consult [status](status.md) for

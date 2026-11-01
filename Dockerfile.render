@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app/src
+WORKDIR /app
+COPY requirements.lock ./
+RUN python -m pip install --no-cache-dir --require-hashes -r requirements.lock \
+    && groupadd --gid 10001 vault \
+    && useradd --uid 10001 --gid vault --no-create-home vault
+COPY --chown=vault:vault src ./src
+USER vault
+EXPOSE 10000
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
+  CMD python -c "import os,urllib.request; p=os.environ.get('PORT','10000'); urllib.request.urlopen('http://127.0.0.1:'+p+'/readyz', timeout=2)"
+# No ENTRYPOINT: both Docker and Render execute a complete, unambiguous command.
+CMD ["python", "-m", "aegisvault.render"]

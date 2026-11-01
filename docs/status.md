@@ -4,6 +4,16 @@ Recorded 2026-11-01. **Research prototype; no production qualification.**
 
 ## Render preparation
 
+**Startup follow-up:** the operator's Render logs show a successful image build followed
+by status 128 without an application diagnostic. Those logs do not establish the exact
+platform error. The previous configuration relied on `dockerCommand: render` being
+appended to the local image's ENTRYPOINT; the Compose test exercised that interpretation,
+not Render's command-launch behavior. A dedicated `Dockerfile.render` now has no ENTRYPOINT
+and uses the complete default command `python -m aegisvault.render`. The Blueprint and
+container smoke job use that file without a command override. Existing Render services
+must switch the Dockerfile and clear the saved bare `render` override. Container rerun
+evidence for this follow-up is pending; the earlier passing run below is historical.
+
 The Render profile now loads stable environment keys and managed PostgreSQL, normalizes
 Render connection URLs with mandatory TLS, honors PORT, and checks database/manifest
 readiness. It creates no local state. Automatic deployment is disabled. The operator

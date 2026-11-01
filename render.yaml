@@ -7,8 +7,7 @@ services:
     plan: free
     region: singapore
     branch: main
-    dockerfilePath: ./Dockerfile
-    dockerCommand: render
+    dockerfilePath: ./Dockerfile.render
     healthCheckPath: /readyz
     autoDeployTrigger: "off"
     envVars:

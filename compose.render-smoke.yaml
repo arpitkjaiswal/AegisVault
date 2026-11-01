@@ -14,8 +14,9 @@ services:
       timeout: 3s
       retries: 30
   app:
-    build: .
-    command: ["render"]
+    build:
+      context: .
+      dockerfile: Dockerfile.render
     env_file: ./.secrets/render-smoke.env
     environment:
       PORT: "10000"
