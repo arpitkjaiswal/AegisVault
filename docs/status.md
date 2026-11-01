@@ -10,11 +10,23 @@ readiness. It creates no local state. Automatic deployment is disabled. The oper
 will deploy; no Render resources or account configuration were changed here.
 
 Local validation of this slice passes **32 tests**, Ruff lint/format and wheel/sdist build.
-The new `render-container` hosted job is pending execution at this documentation revision:
-it builds the actual image, tests a TLS PostgreSQL connection, authenticated HTTP operations,
-application restart without a state volume, database outage readiness and recovery.
-Its outcome must be recorded before claiming container qualification. Local Docker is
-unavailable. See [Render setup](render.md) and [slice receipt](render-verification.json).
+[Hosted run 41283307678](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41283307678)
+passes at source commit `69bb77c2b7ceb77f54cd6cb8a6bfea66d337ed0e`:
+
+- `postgres16`: 32 tests pass, one warning; PostgreSQL 16.15 and Python 3.12.15.
+- `sqlite-and-package`: 32 tests pass, one warning; lint/format, build and installed-wheel
+  init/doctor pass.
+- `render-container`: the actual Docker image builds and uses PostgreSQL over TLS. The
+  authenticated HTTP write/read/normalized search/audit journey passes on port 10000,
+  then passes after application restart with no state volume and a read-only filesystem.
+  Stopping the database produces readiness 503 while liveness stays 200; restarting it
+  restores the journey and retained data. Disposable resources are cleaned up successfully.
+
+`render.yaml` also validates against Render's official JSON Schema. This is container and
+configuration evidence, not a live Render deployment or production qualification. The
+subsequent evidence update changes documentation only. Local Docker remains unavailable;
+container observations come from the hosted job. See [Render setup](render.md) and the
+[slice receipt](render-verification.json).
 
 ## Hosted verification
 
@@ -58,8 +70,9 @@ launching the service and probe in the same execution namespace passes.
 
 ## Not executed / not qualified
 
-- Docker build/Compose: definitions provided; Docker runtime unavailable. Base-image tags
-  remain mutable demonstration tags.
+- Live Render infrastructure, Blueprint creation and public HTTPS routing: operator smoke
+  test pending. The Docker/Compose lifecycle now passes in the hosted job above, but base
+  image tags remain mutable demonstration tags.
 - Real browser rendering/mobile interaction: Chromium was unavailable and its attempted
   download produced invalid archives. Static assets/API pass; visual/browser QA is UNKNOWN.
 - Deployment: no hosting provider, domain or cloud resources provisioned; no live deployment.

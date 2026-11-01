@@ -8,7 +8,7 @@
     "ruff_format": "PASS",
     "wheel_sdist_build": "PASS"
   },
-  "hosted_container": "PENDING",
+  "hosted_container": "PASS",
   "deployed_to_render": false,
   "runtime_sha256": {
     "src/aegisvault/__init__.py": "0e801be7a390a0ca132c071118c68ddf76b8f2b760abfcd4e2d0a27b5080bbbd",
@@ -22,5 +22,44 @@
     "src/aegisvault/static/console.js": "c46c448866089c47ff2eb83e8f4d8b69a59e45c54c7e8ae09e34db8504844969",
     "src/aegisvault/static/index.html": "85ea076fbd78cd49cb5dc8eacd2c8cbb72fd316f36cc99e9bbb031ddf88f7cd1",
     "src/aegisvault/vault.py": "3a34753a1dc021eb5c71266fbd085ebd55add9a28286ba3830882db38560648a"
-  }
+  },
+  "hosted": {
+    "source_commit": "69bb77c2b7ceb77f54cd6cb8a6bfea66d337ed0e",
+    "run_id": 41283307678,
+    "url": "https://github.com/arpitkjaiswal/AegisVault/actions/runs/41283307678",
+    "conclusion": "success",
+    "jobs": {
+      "postgres16": {
+        "id": 124779472943,
+        "passed": 32,
+        "warnings": 1
+      },
+      "sqlite-and-package": {
+        "id": 124779473165,
+        "passed": 32,
+        "warnings": 1,
+        "package_checks": "PASS"
+      },
+      "render-container": {
+        "id": 124779473075,
+        "image_build": "PASS",
+        "postgres_tls": "PASS",
+        "authenticated_http": "PASS",
+        "restart_without_state_volume": "PASS",
+        "outage_ready_503_live_200": "PASS",
+        "database_recovery": "PASS"
+      }
+    }
+  },
+  "schema_validation": {
+    "url": "https://render.com/schema/render.yaml.json",
+    "schema_sha256": "8a3fb8da6b4f55fe686fbefa790e011d3dd7895f013f355953c572a21ab6494a",
+    "result": "PASS"
+  },
+  "limits": [
+    "No live Render deployment or infrastructure test",
+    "No independent security review or production qualification",
+    "Self-signed internal TLS uses require, not server certificate verification",
+    "Free Render PostgreSQL expires after 30 days"
+  ]
 }

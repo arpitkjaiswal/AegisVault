@@ -7,9 +7,9 @@ and an authenticated audit trail.** Python SDK · SQLAlchemy · PostgreSQL · HT
 See [verification status](docs/status.md), [security boundaries](docs/security.md), and
 [deployment instructions](docs/deployment.md).
 
-[Hosted verification](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41282777818):
-26 tests pass on PostgreSQL 16.15 and 26 on SQLite, with packaging/install checks passing
-at `54863a6`. This evidence covers that source revision; Docker deployment remains pending.
+[Hosted verification](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41283307678):
+32 tests pass in each database job, with packaging/install and Render-style Docker/TLS,
+restart and database-outage checks passing at `69bb77c`. Live Render deployment is pending.
 
 ## Run it
 

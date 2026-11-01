@@ -15,7 +15,7 @@ ranking or a performance/security benchmark. No upstream source was copied into 
 | Search | Declared equality/IN | Search-root rotation, constraints, separately reviewed richer leakage profiles |
 | Keys | Provider protocol and synthetic-data local keyring | Real KMS envelope API, IAM/outage/backup qualification |
 | Lifecycle | Bounded rewrap and payload regeneration | Authenticated job fencing, concurrency/crash fault injection, export/removal |
-| Deployability | Local console, package, Compose recipe, CI | Run PostgreSQL/Docker/hosted CI and synthetic staging smoke tests |
+| Deployability | Local console, package, Render Blueprint; PostgreSQL and container lifecycle CI pass | Operator-run Render deployment and HTTPS staging smoke test |
 | Assurance | Crypto vector, adversarial SDK/API tests | Independent review, supply-chain provenance, measured SLOs |
 
 Cryptalis has a substantially broader transparent SQLAlchemy/SQLModel and PostgreSQL

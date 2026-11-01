@@ -5,9 +5,9 @@ stable environment secrets and managed PostgreSQL, with a separate `render` star
 The file-based commands below remain the local/Compose workflow.
 
 The first deployment target is a **private synthetic-data staging demo**. There is no
-production approval, running public deployment or verified application Docker result.
-Hosted PostgreSQL 16 integration and packaging checks pass; the application container and
-Compose smoke test remain pending. Consult status.md for actual evidence boundaries.
+production approval or running public deployment. Hosted PostgreSQL 16 integration,
+packaging and Render-style Docker/TLS/restart/outage smoke checks pass. Consult status.md
+for the actual evidence boundaries; a live Render smoke test is still the operator's step.
 Docker and Compose must be installed on the deployment host.
 
 ## Local PostgreSQL + application containers
