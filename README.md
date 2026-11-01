@@ -2,7 +2,7 @@
 
 **An encrypted document workspace with policy-gated reads, explicit search leakage,
 and an authenticated audit trail.** Python SDK · SQLAlchemy · PostgreSQL · HTTP API · local console.
-
+ https://aegisvault-demo.onrender.com
 **Research prototype. Use synthetic data. Not independently audited or production-security-qualified.**
 See [verification status](docs/status.md), [security boundaries](docs/security.md), and
 [deployment instructions](docs/deployment.md).
