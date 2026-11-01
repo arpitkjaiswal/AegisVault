@@ -61,5 +61,20 @@
     "No independent security review or production qualification",
     "Self-signed internal TLS uses require, not server certificate verification",
     "Free Render PostgreSQL expires after 30 days"
-  ]
+  ],
+  "startup_followup": {
+    "source_commit": "efeaa2a6cd68f85d86c3019fb606d3a72ab49e67",
+    "url": "https://github.com/arpitkjaiswal/AegisVault/actions/runs/41284195063",
+    "all_three_jobs": "PASS",
+    "container_job": 124782053326,
+    "start_command": "python -m aegisvault.render",
+    "entrypoint": null,
+    "schema_validation": "PASS",
+    "deployment_configuration_sha256": {
+      "Dockerfile.render": "a77d2991ba318e6f224f24354ea2c45e7403187f1286121ec60e91eaeea15839",
+      "render.yaml": "6bcc055f556f014008c4f15140b161fe02214d9fac0cc52af7f2600e177e1dc2",
+      "compose.render-smoke.yaml": "120d0b882d11e1bd62201c80c41b0d1c4175b18dd624bdad766bdf7bcb962d7a"
+    },
+    "live_render_recovery": "PENDING OPERATOR REDEPLOY"
+  }
 }

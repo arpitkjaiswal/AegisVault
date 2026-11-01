@@ -11,8 +11,14 @@ appended to the local image's ENTRYPOINT; the Compose test exercised that interp
 not Render's command-launch behavior. A dedicated `Dockerfile.render` now has no ENTRYPOINT
 and uses the complete default command `python -m aegisvault.render`. The Blueprint and
 container smoke job use that file without a command override. Existing Render services
-must switch the Dockerfile and clear the saved bare `render` override. Container rerun
-evidence for this follow-up is pending; the earlier passing run below is historical.
+must switch the Dockerfile and clear the saved bare `render` override.
+
+[Follow-up run 41284195063](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41284195063)
+passes at `efeaa2a6cd68f85d86c3019fb606d3a72ab49e67`: both 32-test jobs and the
+Render container build/TLS/HTTP/restart/outage/recovery job succeed using the dedicated
+image's default CMD. The updated Blueprint passes official JSON Schema validation.
+This removes command-override ambiguity; the supplied Render logs still do not identify
+the original platform error, and live Render recovery awaits the operator's redeploy.
 
 The Render profile now loads stable environment keys and managed PostgreSQL, normalizes
 Render connection URLs with mandatory TLS, honors PORT, and checks database/manifest
