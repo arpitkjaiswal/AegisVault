@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aegisvault-sdk"
+version = "0.1.0"
+description = "Policy-aware encrypted document vault with explicit search leakage and verifiable audit chains"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Arpit Kumar Jaiswal" }]
+dependencies = [
+  "pydantic>=2.14.1,<3",
+  "cryptography>=50.0.2,<51",
+  "SQLAlchemy>=2.0.55,<2.1",
+  "psycopg[binary]>=3.3.6,<4",
+  "fastapi>=0.162,<0.163",
+  "uvicorn>=0.54,<0.55",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.4,<9", "httpx>=0.28,<0.29", "hypothesis>=6.170,<7", "ruff>=0.17,<0.18", "build>=1.6,<2"]
+
+[project.scripts]
+aegisvault = "aegisvault.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aegisvault"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AegisVault · Encrypted data workspace</title><link rel="stylesheet" href="/console.css"></head>
+<body>
+<aside><a class="brand" href="/">◈ <span>AEGIS<span class="soft">VAULT</span></span></a>
+<div class="overline">DEVELOPER WORKSPACE</div>
+<button class="nav active" data-view="records">01 <span>Encrypted records</span></button>
+<button class="nav" data-view="search">02 <span>Exact search</span></button>
+<button class="nav" data-view="audit">03 <span>Audit integrity</span></button>
+<button class="nav" data-view="leakage">04 <span>Leakage report</span></button>
+<div class="sidebar-bottom"><div class="dot"></div> Research prototype<p>Use synthetic data.<br>Independent review pending.</p></div></aside>
+<main>
+<header><span>APPLICATION-LAYER ENCRYPTION</span><span class="badge">v0.1 / RESEARCH</span></header>
+<div class="heading"><div class="overline">YOUR DATA. YOUR KEYS. EXPLICIT TRUST.</div><h1>Keep the database<br>out of the conversation.</h1><p>Encrypt documents before storage. Search only what you declare.<br>Authenticate every read and inspect the trail it leaves.</p></div>
+<section class="connection"><div><strong id="connection-status">Connect your workspace</strong><small id="identity">The token stays in this page's memory.</small></div><input id="token" type="password" autocomplete="off" placeholder="Paste your private demo token" aria-label="API token"><button id="connect">Connect ↗</button></section>
+<div class="metrics"><div><small>PAYLOAD CIPHER</small><strong>AES-256-GCM-SIV</strong><span>Random per-record data keys</span></div><div><small>DATA BOUNDARY</small><strong id="tenant">Tenant isolated</strong><span>Tenant + record + manifest + revision</span></div><div><small>SEARCH MODE</small><strong>Exact match / IN</strong><span>Tenant-scoped HMAC terms</span></div></div>
+<section id="records" class="view"><div class="section-heading"><h2>Encrypted records</h2><span>01 / WRITE & READ</span></div><div class="columns"><div class="panel"><h3>Store a document</h3><p class="muted">Every declared field is encrypted. An update requires the current revision.</p><label>Collection<input id="write-collection" value="customers"></label><div class="row"><label>Record ID<input id="write-id" value="customer-001"></label><label>Expected revision<input id="write-revision" type="number" min="0" value="0"></label></div><label>Document<textarea id="document" rows="8" spellcheck="false">{
+  "name": "Ada Lovelace",
+  "email": "ada@example.test",
+  "profile": {"plan": "research", "tags": ["synthetic"]}
+}</textarea></label><button id="write">Encrypt & store ↗</button></div><div class="panel"><h3>Read a record</h3><p class="muted">The server derives your tenant and roles from your credential. The response contains decrypted data.</p><label>Collection<input id="read-collection" value="customers"></label><label>Record ID<input id="read-id" value="customer-001"></label><button class="secondary" id="read">Authenticate & decrypt ↗</button><div class="note">No production assurance is implied. Host compromise can expose plaintext and keys.</div></div></div></section>
+<section id="search" class="view hidden"><div class="section-heading"><h2>Search encrypted records</h2><span>02 / DECLARED EXACT SEARCH</span></div><div class="panel"><p class="muted">Enter one value for equality, or multiple values for IN. Normalization follows the manifest. Equality and frequency remain visible to a database observer.</p><div class="row"><label>Collection<input id="search-collection" value="customers"></label><label>Field<input id="search-field" value="email"></label></div><label>Values (JSON array)<textarea id="search-values" rows="3">["ADA@example.test"]</textarea></label><button id="search-button">Search ↗</button></div></section>
+<section id="audit" class="view hidden"><div class="section-heading"><h2>Verify the audit chain</h2><span>03 / AUTHENTICATED HISTORY</span></div><div class="panel"><h3>Inspect the current checkpoint</h3><p class="muted">Verify the sequence and HMAC of successful vault operations. Copy the returned checkpoint to trusted storage outside the database. The CLI can verify that a later database still contains that prefix.</p><button id="audit-button">Verify & get checkpoint ↗</button><div class="note">An unanchored chain cannot detect tail deletion or complete rollback. This is not an external immutable audit service. Failed requests are not in this chain.</div></div></section>
+<section id="leakage" class="view hidden"><div class="section-heading"><h2>Understand what remains visible</h2><span>04 / EXPLICIT TRADEOFFS</span></div><div class="panel"><p class="muted">The manifest is an enforceable contract. Exact search requires explicit leakage acceptance; range, prefix, fuzzy search and arbitrary SQL are outside this version.</p><button id="leakage-button">Inspect declared leakage ↗</button></div></section>
+<section class="output"><div class="section-heading"><h2>Response</h2><span id="result-status">READY</span></div><pre id="result" aria-live="polite">Connect with your private token, then store a synthetic document.</pre></section>
+<footer>AegisVault / open research <span>Encryption is a boundary. Evidence is a requirement.</span></footer>
+</main><script src="/console.js"></script></body></html>

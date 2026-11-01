@@ -1,0 +1,53 @@
+{
+  "recorded_date": "2026-11-01",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux x86_64"
+  },
+  "versions": {
+    "cryptography": "50.0.2",
+    "SQLAlchemy": "2.0.55",
+    "psycopg": "3.3.6",
+    "fastapi": "0.162.0",
+    "pydantic": "2.14.2",
+    "pytest": "8.4.2",
+    "ruff": "0.17.3",
+    "starlette": "1.10.0",
+    "httpx": "0.28.1"
+  },
+  "commands": {
+    "uv sync --frozen --all-groups": "PASS",
+    "uv run ruff check .": "PASS",
+    "uv run ruff format --check .": "PASS",
+    "uv run pytest -q": {
+      "passed": 26,
+      "warnings": 1,
+      "database": "isolated SQLite"
+    },
+    "uv build": "PASS",
+    "independent installed wheel CLI init + doctor + console assets": "PASS",
+    "live loopback HTTP smoke": "PASS"
+  },
+  "unknown": [
+    "PostgreSQL 16 execution",
+    "Docker/Compose execution",
+    "real browser visual QA",
+    "GitHub hosted CI",
+    "independent review",
+    "production custody",
+    "deployment"
+  ],
+  "runtime_sha256": {
+    "src/aegisvault/__init__.py": "0e801be7a390a0ca132c071118c68ddf76b8f2b760abfcd4e2d0a27b5080bbbd",
+    "src/aegisvault/api.py": "c00dedc6b47c9d7237cdcb0f9cbb204324374cb854cfe46667bea414c57b5117",
+    "src/aegisvault/cli.py": "8a29c0720d7afb3cbef74f37343407713237a9860d3b8c56b165eb0e9ba4c5f7",
+    "src/aegisvault/crypto.py": "8969afeb456531246167d7422ff9331826ec37376e9e8ea59b73621012428ec7",
+    "src/aegisvault/errors.py": "0dad6c263c8925f10718cec000db530007c5e69be398dd3f0c85b1707f0a89c9",
+    "src/aegisvault/manifest.py": "742e9ff00ca5bd123c6757621f0b69d8e4255755d9cd57998c85a7427a81f0f7",
+    "src/aegisvault/static/console.css": "2a0ec75c479ef5e68a33326ca8d7ece35b5486792e579b0c1471eba07ea362f1",
+    "src/aegisvault/static/console.js": "c46c448866089c47ff2eb83e8f4d8b69a59e45c54c7e8ae09e34db8504844969",
+    "src/aegisvault/static/index.html": "85ea076fbd78cd49cb5dc8eacd2c8cbb72fd316f36cc99e9bbb031ddf88f7cd1",
+    "src/aegisvault/vault.py": "dc72ce3ff0885301c823a1e9d658ff7132b0e7b1fd38785233e5a4b0515a634b"
+  },
+  "qualified_for_production": false
+}

@@ -1,0 +1,54 @@
+name: Verify vault
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  sqlite-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install uv==0.13.4
+      - run: uv sync --frozen --all-groups
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest -q
+      - run: uv build
+      - name: Installed-wheel smoke
+        run: |
+          python -m venv /tmp/aegis-installed
+          /tmp/aegis-installed/bin/pip install --require-hashes -r requirements.lock
+          /tmp/aegis-installed/bin/pip install --no-deps dist/*.whl
+          cd /tmp
+          /tmp/aegis-installed/bin/aegisvault --state /tmp/aegis-ci init
+          /tmp/aegis-installed/bin/aegisvault --state /tmp/aegis-ci doctor
+  postgres16:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: vault_test
+          POSTGRES_PASSWORD: disposable-ci-only
+          POSTGRES_DB: vault_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U vault_test -d vault_test"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      AEGIS_TEST_DATABASE_URL: postgresql+psycopg://vault_test:disposable-ci-only@localhost/vault_test
+      AEGIS_DISPOSABLE_TEST_TARGET: 'yes'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install uv==0.13.4
+      - run: uv sync --frozen --all-groups
+      - run: uv run pytest -q

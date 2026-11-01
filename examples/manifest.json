@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "project": "aegis-demo",
+  "collections": {
+    "customers": {
+      "fields": {
+        "name": {
+          "kind": "string"
+        },
+        "email": {
+          "kind": "string",
+          "search": "exact",
+          "normalize": "casefold",
+          "accept_equality_leakage": true
+        },
+        "profile": {
+          "kind": "json"
+        }
+      },
+      "roles": {
+        "read": [
+          "reader",
+          "admin"
+        ],
+        "write": [
+          "writer",
+          "admin"
+        ],
+        "search": [
+          "reader",
+          "admin"
+        ],
+        "delete": [
+          "admin"
+        ],
+        "rotate": [
+          "admin"
+        ]
+      },
+      "purposes": [
+        "support",
+        "maintenance"
+      ]
+    }
+  }
+}

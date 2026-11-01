@@ -1,0 +1,12 @@
+.git
+.aegisvault
+.secrets
+.env
+.venv
+__pycache__
+tests
+dist
+*.db
+.pytest_cache
+.hypothesis
+.ruff_cache
