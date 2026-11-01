@@ -7,6 +7,10 @@ and an authenticated audit trail.** Python SDK · SQLAlchemy · PostgreSQL · HT
 See [verification status](docs/status.md), [security boundaries](docs/security.md), and
 [deployment instructions](docs/deployment.md).
 
+[Hosted verification](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41282777818):
+26 tests pass on PostgreSQL 16.15 and 26 on SQLite, with packaging/install checks passing
+at `54863a6`. This evidence covers that source revision; Docker deployment remains pending.
+
 ## Run it
 
 Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.

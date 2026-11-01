@@ -2,6 +2,22 @@
 
 Recorded 2026-11-01. **Research prototype; no production qualification.**
 
+## Hosted verification
+
+[GitHub run 41282777818](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41282777818)
+passes at source commit `54863a6672483271881635567ee1fea9af3d27a2`:
+
+- `postgres16`: 26 tests pass, one Starlette deprecation warning. PostgreSQL 16.15,
+  Python 3.12.15, Ubuntu 26.04 x86_64, fresh disposable service container.
+- `sqlite-and-package`: 26 tests pass, one Starlette deprecation warning; Ruff lint/format,
+  wheel/sdist build, hash-locked runtime installation and installed CLI init/doctor pass.
+
+The tested runtime source is unchanged in the subsequent documentation update. Hosted
+action logs also warn that pinned checkout/setup-python actions target deprecated Node 20
+and are forced to Node 24. The successful jobs do not qualify these dependencies or the
+system for production security. The application Docker image/Compose recipe was not run
+by the PostgreSQL service-container test.
+
 ## Executed successfully
 
 | Boundary | Actual observation |
@@ -28,18 +44,15 @@ launching the service and probe in the same execution namespace passes.
 
 ## Not executed / not qualified
 
-- PostgreSQL 16 integration: CI definition provided; no reachable authorized PostgreSQL
-  service was available here. SQLAlchemy dialect portability alone is not a passed test.
 - Docker build/Compose: definitions provided; Docker runtime unavailable. Base-image tags
   remain mutable demonstration tags.
 - Real browser rendering/mobile interaction: Chromium was unavailable and its attempted
   download produced invalid archives. Static assets/API pass; visual/browser QA is UNKNOWN.
-- GitHub hosted CI: no run exists until a repository is created and the commit is pushed.
 - Deployment: no hosting provider, domain or cloud resources provisioned; no live deployment.
 - Independent security review, real KMS custody/IAM, externally immutable auditing,
   disaster recovery, destructive key retirement, search-root rotation and performance SLOs.
 
-The [machine-readable receipt](verification.json) binds runtime source hashes and records
-exact installed dependency versions for the local observation. It is a development receipt,
+The [machine-readable receipt](verification.json) binds runtime source hashes, records
+exact local dependency versions and links the hosted observation. It is a development receipt,
 not independently signed evidence or an audit. Future changes require fresh evidence for
 the affected behavior. [Roadmap](roadmap.md) lists unfinished product work.

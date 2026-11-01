@@ -29,10 +29,8 @@
     "live loopback HTTP smoke": "PASS"
   },
   "unknown": [
-    "PostgreSQL 16 execution",
     "Docker/Compose execution",
     "real browser visual QA",
-    "GitHub hosted CI",
     "independent review",
     "production custody",
     "deployment"
@@ -49,5 +47,36 @@
     "src/aegisvault/static/index.html": "85ea076fbd78cd49cb5dc8eacd2c8cbb72fd316f36cc99e9bbb031ddf88f7cd1",
     "src/aegisvault/vault.py": "dc72ce3ff0885301c823a1e9d658ff7132b0e7b1fd38785233e5a4b0515a634b"
   },
-  "qualified_for_production": false
+  "qualified_for_production": false,
+  "hosted": {
+    "url": "https://github.com/arpitkjaiswal/AegisVault/actions/runs/41282777818",
+    "run_id": 41282777818,
+    "head_sha": "54863a6672483271881635567ee1fea9af3d27a2",
+    "conclusion": "success",
+    "python": "3.12.15",
+    "os": "Ubuntu 26.04 x86_64",
+    "jobs": [
+      {
+        "id": 124777904710,
+        "name": "postgres16",
+        "passed": 26,
+        "warnings": 1,
+        "postgresql": "16.15",
+        "conclusion": "success"
+      },
+      {
+        "id": 124777904739,
+        "name": "sqlite-and-package",
+        "passed": 26,
+        "warnings": 1,
+        "packaging_and_installed_smoke": "PASS",
+        "conclusion": "success"
+      }
+    ],
+    "limits": [
+      "application Docker/Compose not executed",
+      "Node 20 action deprecation warnings retained",
+      "no production qualification"
+    ]
+  }
 }

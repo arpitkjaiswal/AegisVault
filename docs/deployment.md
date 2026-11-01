@@ -1,9 +1,10 @@
 # Deployment path
 
 The first deployment target is a **private synthetic-data staging demo**. There is no
-production approval, running public deployment or verified Docker result in this checkout.
-Local SQLite tests do not establish PostgreSQL or Docker behavior. Consult status.md for
-actual completed checks. Docker and Compose must be installed on the deployment host.
+production approval, running public deployment or verified application Docker result.
+Hosted PostgreSQL 16 integration and packaging checks pass; the application container and
+Compose smoke test remain pending. Consult status.md for actual evidence boundaries.
+Docker and Compose must be installed on the deployment host.
 
 ## Local PostgreSQL + application containers
 
@@ -65,7 +66,8 @@ locks and hashes are not independent security review or proof of safe upstream p
 
 ## GitHub publication
 
-The intended new repository is `arpitkjaiswal/AegisVault`. Before publishing, verify that
+The source repository is [arpitkjaiswal/AegisVault](https://github.com/arpitkjaiswal/AegisVault).
+Before each publication, verify that
 only source/docs/tests/locks are staged and all `.aegisvault`, `.env`, database, key and token
-files are ignored. Push the initial verified source commit, then inspect the included CI
-jobs. Neither a local commit nor a workflow file proves that hosted CI has run successfully.
+files are ignored. Inspect hosted CI for the published revision. Status.md records the
+initial passing source run; a workflow definition alone never establishes a passed run.
