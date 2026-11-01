@@ -1,5 +1,9 @@
 # Deployment path
 
+For Render, use the [Render guide](render.md) and root `render.yaml`. That profile uses
+stable environment secrets and managed PostgreSQL, with a separate `render` start command.
+The file-based commands below remain the local/Compose workflow.
+
 The first deployment target is a **private synthetic-data staging demo**. There is no
 production approval, running public deployment or verified application Docker result.
 Hosted PostgreSQL 16 integration and packaging checks pass; the application container and

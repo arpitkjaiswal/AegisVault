@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-01",
+  "slice": "Render host preparation",
+  "local": {
+    "pytest_passed": 32,
+    "warnings": 1,
+    "ruff_lint": "PASS",
+    "ruff_format": "PASS",
+    "wheel_sdist_build": "PASS"
+  },
+  "hosted_container": "PENDING",
+  "deployed_to_render": false,
+  "runtime_sha256": {
+    "src/aegisvault/__init__.py": "0e801be7a390a0ca132c071118c68ddf76b8f2b760abfcd4e2d0a27b5080bbbd",
+    "src/aegisvault/api.py": "49ffdf9ed5ee13cd7a66805779b2fb260f75f7a79635eb50536860ce94a097ef",
+    "src/aegisvault/cli.py": "6e4808f0f4848724242859d7b6c41306daebfec331e73031902c0aa1bd6731ef",
+    "src/aegisvault/crypto.py": "8969afeb456531246167d7422ff9331826ec37376e9e8ea59b73621012428ec7",
+    "src/aegisvault/errors.py": "0dad6c263c8925f10718cec000db530007c5e69be398dd3f0c85b1707f0a89c9",
+    "src/aegisvault/manifest.py": "742e9ff00ca5bd123c6757621f0b69d8e4255755d9cd57998c85a7427a81f0f7",
+    "src/aegisvault/render.py": "ab3fee0fb7e7b8eb8c3a824868f5993f9949e2febddd59b6d2576ef861af5316",
+    "src/aegisvault/static/console.css": "2a0ec75c479ef5e68a33326ca8d7ece35b5486792e579b0c1471eba07ea362f1",
+    "src/aegisvault/static/console.js": "c46c448866089c47ff2eb83e8f4d8b69a59e45c54c7e8ae09e34db8504844969",
+    "src/aegisvault/static/index.html": "85ea076fbd78cd49cb5dc8eacd2c8cbb72fd316f36cc99e9bbb031ddf88f7cd1",
+    "src/aegisvault/vault.py": "3a34753a1dc021eb5c71266fbd085ebd55add9a28286ba3830882db38560648a"
+  }
+}

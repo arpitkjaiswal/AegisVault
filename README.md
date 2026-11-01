@@ -13,6 +13,10 @@ at `54863a6`. This evidence covers that source revision; Docker deployment remai
 
 ## Run it
 
+**Deploying to Render?** Use the included [`render.yaml`](render.yaml) Blueprint and the
+[Render guide](docs/render.md). The cloud profile uses environment secrets and PostgreSQL,
+honors `PORT`, and checks `/readyz`. No local state directory or persistent app disk is needed.
+
 Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
 
 ```bash

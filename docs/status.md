@@ -2,6 +2,20 @@
 
 Recorded 2026-11-01. **Research prototype; no production qualification.**
 
+## Render preparation
+
+The Render profile now loads stable environment keys and managed PostgreSQL, normalizes
+Render connection URLs with mandatory TLS, honors PORT, and checks database/manifest
+readiness. It creates no local state. Automatic deployment is disabled. The operator
+will deploy; no Render resources or account configuration were changed here.
+
+Local validation of this slice passes **32 tests**, Ruff lint/format and wheel/sdist build.
+The new `render-container` hosted job is pending execution at this documentation revision:
+it builds the actual image, tests a TLS PostgreSQL connection, authenticated HTTP operations,
+application restart without a state volume, database outage readiness and recovery.
+Its outcome must be recorded before claiming container qualification. Local Docker is
+unavailable. See [Render setup](render.md) and [slice receipt](render-verification.json).
+
 ## Hosted verification
 
 [GitHub run 41282777818](https://github.com/arpitkjaiswal/AegisVault/actions/runs/41282777818)
@@ -12,7 +26,7 @@ passes at source commit `54863a6672483271881635567ee1fea9af3d27a2`:
 - `sqlite-and-package`: 26 tests pass, one Starlette deprecation warning; Ruff lint/format,
   wheel/sdist build, hash-locked runtime installation and installed CLI init/doctor pass.
 
-The tested runtime source is unchanged in the subsequent documentation update. Hosted
+The initial tested runtime source was unchanged in its immediate documentation update. Hosted
 action logs also warn that pinned checkout/setup-python actions target deprecated Node 20
 and are forced to Node 24. The successful jobs do not qualify these dependencies or the
 system for production security. The application Docker image/Compose recipe was not run

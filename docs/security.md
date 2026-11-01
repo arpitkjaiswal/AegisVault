@@ -54,6 +54,13 @@ to principals trusted with that capability. The CLI assumes an already trusted l
 It is not a remotely authenticated administrative interface. The manifest is trusted
 application configuration, not an authorization policy approved by the database.
 
+The [Render demo host](render.md) reads independent 32-byte wrapping/search/audit secrets
+and an admin bearer from stable environment variables; it creates no key files. It refuses
+missing secrets, non-PostgreSQL URLs and plaintext-fallback SSL modes, and applies a 32-request
+concurrency cap. TLS `require` encrypts the database link but does not verify Render's
+self-signed internal server certificate. This profile fixes one demo tenant and generation
+g1; it does not qualify cloud KMS custody, advanced identity, remote key rotation or rate limiting.
+
 ## Audit integrity
 
 Successful create/update/read/search/delete/rotation operations append one HMAC-authenticated

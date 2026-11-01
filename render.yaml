@@ -1,0 +1,36 @@
+# Synthetic demo only. Free Postgres currently expires after 30 days.
+# Generated secrets survive ordinary restarts; do not delete or regenerate encryption roots.
+services:
+  - type: web
+    name: aegisvault-demo
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerCommand: render
+    healthCheckPath: /readyz
+    autoDeployTrigger: "off"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aegisvault-demo-db
+          property: connectionString
+      - key: AEGIS_ALLOW_SYNTHETIC_DEPLOY
+        value: "yes"
+      - key: AEGIS_WRAPPING_KEY
+        generateValue: true
+      - key: AEGIS_SEARCH_KEY
+        generateValue: true
+      - key: AEGIS_AUDIT_KEY
+        generateValue: true
+      - key: AEGIS_API_TOKEN
+        generateValue: true
+databases:
+  - name: aegisvault-demo-db
+    plan: free
+    region: singapore
+    postgresMajorVersion: "16"
+    databaseName: aegisvault
+    user: aegisvault
+    ipAllowList: []

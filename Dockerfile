@@ -10,6 +10,6 @@ COPY --chown=vault:vault src ./src
 USER vault
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"
+  CMD python -c "import os,urllib.request; p=os.environ.get('PORT','8000'); urllib.request.urlopen('http://127.0.0.1:'+p+'/readyz', timeout=2)"
 ENTRYPOINT ["python", "-m", "aegisvault.cli", "--state", "/state/vault"]
 CMD ["serve", "--host", "0.0.0.0"]

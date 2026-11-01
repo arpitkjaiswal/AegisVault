@@ -26,6 +26,40 @@ jobs:
           cd /tmp
           /tmp/aegis-installed/bin/aegisvault --state /tmp/aegis-ci init
           /tmp/aegis-installed/bin/aegisvault --state /tmp/aegis-ci doctor
+  render-container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Prepare disposable secrets and PostgreSQL TLS certificate
+        run: |
+          python3 scripts/prepare_render_smoke.py
+          mkdir -p tests/deploy/.certs
+          openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj '/CN=db' -keyout tests/deploy/.certs/server.key -out tests/deploy/.certs/server.crt
+          chmod 600 tests/deploy/.certs/server.key
+      - name: Build and start Render-style containers
+        run: |
+          docker compose -f compose.render-smoke.yaml build
+          docker compose -f compose.render-smoke.yaml up -d --wait --wait-timeout 120
+      - name: Prove TLS and initial HTTP journey
+        run: |
+          docker compose -f compose.render-smoke.yaml exec -T app python -c 'from aegisvault.render import Settings; from sqlalchemy import create_engine,text; e=create_engine(Settings.from_env().database_url); c=e.connect(); assert c.scalar(text("SELECT ssl FROM pg_stat_ssl WHERE pid=pg_backend_pid()")) is True; c.close(); e.dispose(); print("PASS: PostgreSQL connection uses TLS")'
+          python3 scripts/check_render_smoke.py create
+      - name: Restart app and retain encrypted records and keys
+        run: |
+          docker compose -f compose.render-smoke.yaml restart app
+          python3 scripts/check_render_smoke.py verify
+      - name: Prove readiness during database outage and recovery
+        run: |
+          docker compose -f compose.render-smoke.yaml stop db
+          python3 scripts/check_render_smoke.py outage
+          docker compose -f compose.render-smoke.yaml start db
+          python3 scripts/check_render_smoke.py verify
+      - name: Destroy only disposable test resources
+        if: always()
+        run: docker compose -f compose.render-smoke.yaml down -v --remove-orphans
   postgres16:
     runs-on: ubuntu-latest
     services:

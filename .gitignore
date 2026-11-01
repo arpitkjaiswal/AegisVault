@@ -14,3 +14,4 @@ dist/
 *.pem
 *.key
 checkpoint.json
+.certs/

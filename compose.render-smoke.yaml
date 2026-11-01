@@ -1,0 +1,31 @@
+# Disposable CI stack exercising the same Docker image/command used by render.yaml.
+services:
+  db:
+    build: ./tests/deploy
+    environment:
+      POSTGRES_DB: aegisvault
+      POSTGRES_USER: aegisvault
+      POSTGRES_PASSWORD: disposable-smoke-only
+    command: ["postgres", "-c", "ssl=on", "-c", "ssl_cert_file=/certs/server.crt", "-c", "ssl_key_file=/certs/server.key"]
+    volumes: ["smoke-db:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aegisvault -d aegisvault"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  app:
+    build: .
+    command: ["render"]
+    env_file: ./.secrets/render-smoke.env
+    environment:
+      PORT: "10000"
+    ports: ["127.0.0.1:18000:10000"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  smoke-db:

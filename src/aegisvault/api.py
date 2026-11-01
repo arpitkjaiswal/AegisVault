@@ -124,6 +124,14 @@ def create_app(vault: Vault, credentials: list[dict]) -> FastAPI:
     def health():
         return {"status": "ok", "production_qualified": False}
 
+    @app.get("/readyz")
+    def ready():
+        try:
+            vault.check_ready()
+        except (SQLAlchemyError, VaultError):
+            return JSONResponse({"status": "unavailable"}, 503)
+        return {"status": "ready", "production_qualified": False}
+
     @app.get("/api/manifest")
     def manifest(ctx: Annotated[Context, Depends(context)]):
         return {

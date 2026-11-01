@@ -523,6 +523,11 @@ class Vault:
             raise IntegrityFailure() from None
         return {"seq": seq, "head": previous}
 
+    def check_ready(self) -> None:
+        """Probe storage and the active manifest contract without decrypting data."""
+        with self.engine.connect() as con:
+            self._contract(con)
+
     def doctor(self) -> dict:
         """Configuration/schema inventory only; not a security qualification."""
         self.provider.wrapping_key(self.provider.active_generation)

@@ -86,6 +86,9 @@ def main():
     parser = argparse.ArgumentParser(description="AegisVault research prototype")
     parser.add_argument("--state", type=Path, default=Path(".aegisvault"))
     sub = parser.add_subparsers(dest="command", required=True)
+    sub.add_parser(
+        "render", help="start a Render demo using stable environment secrets and Postgres"
+    )
     init = sub.add_parser("init", help="create a new synthetic local demo; refuses overwrite")
     init.add_argument(
         "--database-url-env", help="environment variable containing a disposable DB URL"
@@ -104,6 +107,10 @@ def main():
     audit.add_argument("--tenant", required=True)
     audit.add_argument("--checkpoint", type=Path)
     args = parser.parse_args()
+    if args.command == "render":
+        from .render import main as render_main
+
+        raise SystemExit(render_main())
     try:
         if args.command == "init":
             args.state.mkdir(mode=0o700, parents=True, exist_ok=False)
